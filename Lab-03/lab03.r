@@ -31,6 +31,7 @@ c_1
 r_1
 a <- ols_step_forward_p(mo_1)
 a
+summary(mo_1)
 # model 2
 mo_2 <- lm(SalePrice ~  GarageCond + TotalBsmtSF +BsmtExposure + Fireplaces, data=Ames)
 c_2 <- get_complexity(mo_2)
