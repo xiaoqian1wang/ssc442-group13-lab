@@ -24,7 +24,7 @@ rmse = function(actual, predicted) {
 }
 
 # model 1
-mo_1 <- lm(SalePrice ~ . , data=Ames_clean)
+mo_1 <- lm(SalePrice ~ 1. , data=Ames_clean)
 c_1 <- get_complexity(mo_1)
 r_1 <- rmse(Ames_clean$SalePrice, predict(mo_1))
 print(c_1)
@@ -33,7 +33,7 @@ a <- ols_step_forward_p(mo_1)
 a
 summary(mo_1)
 # model 2
-mo_2 <- lm(SalePrice ~  GarageCond + TotalBsmtSF +BsmtExposure + Fireplaces, data=Ames)
+mo_2 <- lm(SalePrice ~  GarageArea , data=Ames)
 c_2 <- get_complexity(mo_2)
 c_2
 r_2 <- rmse(Ames$SalePrice, predict(mo_2))
@@ -42,7 +42,7 @@ b <- ols_step_forward_p(mo_2)
 b
 # model 3
 attach(Ames)
-mo_3 <- lm(SalePrice ~ Heating+FireplaceQu+ BsmtExposure)
+mo_3 <- lm(SalePrice ~ GarageArea+Fireplaces)
 c_3 <- get_complexity(mo_3)
 c_3
 r_3 <- rmse(Ames$SalePrice, predict(mo_3))
@@ -50,7 +50,7 @@ r_3
 c <- ols_step_forward_p(mo_3)
 c
 # model 4
-mo_4 <- lm(SalePrice ~ HouseStyle + HeatingQC + KitchenQual + GarageArea, data=Ames)
+mo_4 <- lm(SalePrice ~ GarageArea+Fireplaces+GrLivArea, data=Ames)
 c_4 <- get_complexity(mo_4)
 c_4
 r_4 <- rmse(Ames$SalePrice, predict(mo_4))
@@ -58,7 +58,7 @@ r_4
 d <- ols_step_forward_p(mo_4)
 d
 # model 5
-mo_5 <- lm(SalePrice ~ Street + CentralAir + YearBuilt + GarageQual + GrLivArea + Utilities, data=Ames)
+mo_5 <- lm(SalePrice ~ GarageArea+Fireplaces+GrLivArea+WoodDeckSF, data=Ames)
 c_5 <- get_complexity(mo_5)
 c_5
 r_5 <- rmse(Ames$SalePrice, predict(mo_5))
@@ -66,7 +66,7 @@ r_5
 e <- ols_step_forward_p(mo_5)
 e
 # model 6
-mo_6 <- lm(SalePrice ~ PoolArea+Foundation+ExterCond+Alley + LotFrontage + MasVnrType + FullBath + GarageFinish, data=Ames)
+mo_6 <- lm(SalePrice ~ GarageArea+Fireplaces+GrLivArea+WoodDeckSF+KitchenAbvGr, data=Ames)
 c_6 <- get_complexity(mo_5)
 c_6
 r_6 <- rmse(Ames$SalePrice, predict(mo_6))
@@ -74,7 +74,7 @@ r_6
 f <- ols_step_forward_p(mo_6)
 f
 # model 7
-mo_7 <- lm(SalePrice ~  OpenPorchSF+ BsmtExposure + WoodDeckSF+ LowQualFinSF, data=Ames)
+mo_7 <- lm(SalePrice ~  GarageArea+Fireplaces+GrLivArea+WoodDeckSF+KitchenAbvGr+EnclosedPorch, data=Ames)
 c_7 <- get_complexity(mo_7)
 c_7
 r_7 <- rmse(Ames$SalePrice, predict(mo_7))
@@ -82,7 +82,7 @@ r_7
 g <- ols_step_forward_p(mo_7)
 g
 # model 8
-mo_8 <- lm(SalePrice ~ MoSold + YrSold+ GarageCars+ KitchenAbvGr+LotConfig+RoofStyle, data=Ames)
+mo_8 <- lm(SalePrice ~ GarageArea+Fireplaces+GrLivArea+WoodDeckSF+KitchenAbvGr+EnclosedPorch+LowQualFinSF, data=Ames)
 c_8 <- get_complexity(mo_8)
 c_8
 r_8 <- rmse(Ames$SalePrice, predict(mo_8))
@@ -90,7 +90,7 @@ r_8
 h <- ols_step_forward_p(mo_8)
 h
 # model 9
-mo_9 <- lm(SalePrice ~ Electrical + RoofMatl+ LandSlope, data=Ames)
+mo_9 <- lm(SalePrice ~ GarageArea+Fireplaces+GrLivArea+WoodDeckSF+KitchenAbvGr+EnclosedPorch+LowQualFinSF+FullBath, data=Ames)
 c_9 <- get_complexity(mo_9)
 c_9
 r_9 <- rmse(Ames$SalePrice, predict(mo_9))
@@ -98,7 +98,8 @@ r_9
 i <- ols_step_forward_p(mo_9)
 i
 # model 10
-mo_10 <- lm(SalePrice ~  ExterQual+ BldgType+ GarageQual, data=Ames)
+mo_10 <- lm(SalePrice ~  GarageArea+Fireplaces+GrLivArea+WoodDeckSF+KitchenAbvGr+EnclosedPorch+LowQualFinSF+HalfBath+
+              PoolQC, data=Ames)
 c_10 <- get_complexity(mo_10)
 c_10
 r_10 <- rmse(Ames$SalePrice, predict(mo_10))
@@ -106,7 +107,8 @@ r_10
 j <- ols_step_forward_p(mo_10)
 j
 # model 11
-mo_11 <- lm(SalePrice ~BsmtExposure+ HeatingQC+ FireplaceQu, data=Ames)
+mo_11 <- lm(SalePrice ~GarageArea+Fireplaces+GrLivArea+WoodDeckSF+KitchenAbvGr+EnclosedPorch+LowQualFinSF+HalfBath+
+              ScreenPorch+PoolQC, data=Ames)
 c_11 <- get_complexity(mo_11)
 c_11
 r_11 <- rmse(Ames$SalePrice, predict(mo_11))
@@ -114,7 +116,8 @@ r_11
 k <- ols_step_forward_p(mo_11)
 k
 # model 12
-mo_12 <- lm(SalePrice ~ BldgType+MasVnrType+ BsmtHalfBath+LowQualFinSF, data=Ames)
+mo_12 <- lm(SalePrice ~ GarageArea+Fireplaces+GrLivArea+WoodDeckSF+KitchenAbvGr+EnclosedPorch+LowQualFinSF+
+              ScreenPorch+PoolQC+HalfBath+GarageCars, data=Ames)
 c_12 <- get_complexity(mo_12)
 c_12
 r_12 <- rmse(Ames$SalePrice, predict(mo_12))
@@ -122,7 +125,8 @@ r_12
 l <- ols_step_forward_p(mo_12)
 l
 #model 13
-mo_13 <- lm(SalePrice ~ BsmtCond+GarageCond+ExterCond, data=Ames)
+mo_13 <- lm(SalePrice ~ GarageArea+Fireplaces+GrLivArea+WoodDeckSF+KitchenAbvGr+EnclosedPorch+LowQualFinSF+HalfBath+
+              ScreenPorch+LotArea+BsmtFinSF1+PoolQC, data=Ames)
 c_13 <- get_complexity(mo_13)
 c_13
 r_13 <- rmse(Ames$SalePrice, predict(mo_13))
@@ -130,7 +134,8 @@ r_13
 m <- ols_step_forward_p(mo_13)
 m
 # model 14
-mo_14 <- lm(SalePrice ~ RoofMatl+ BsmtFullBath+ Electrical+HalfBath, data=Ames)
+mo_14 <- lm(SalePrice ~ GarageArea+Fireplaces+GrLivArea+WoodDeckSF+KitchenAbvGr+EnclosedPorch+LowQualFinSF+HalfBath+
+              ScreenPorch+BsmtFinSF1+PoolQC+GarageCars, data=Ames)
 c_14 <- get_complexity(mo_14)
 c_14
 r_14 <- rmse(Ames$SalePrice, predict(mo_14))
@@ -138,7 +143,8 @@ r_14
 n <- ols_step_forward_p(mo_14)
 n
 # model 15
-mo_15 <- lm(SalePrice ~ EnclosedPorch+ RoofStyle+ ScreenPorch+FullBath, data=Ames)
+mo_15 <- lm(SalePrice ~ GarageArea+Fireplaces+GrLivArea+WoodDeckSF+KitchenAbvGr+EnclosedPorch+LowQualFinSF+HalfBath+
+              ScreenPorch+GarageCars+OpenPorchSF+PoolQC+OpenPorchSF, data=Ames)
 c_15 <- get_complexity(mo_15)
 c_15
 r_15 <- rmse(Ames$SalePrice, predict(mo_15))
