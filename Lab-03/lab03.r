@@ -26,9 +26,9 @@ rmse = function(actual, predicted) {
 # model 1
 mo_1 <- lm(SalePrice ~ . , data=Ames_clean)
 c_1 <- get_complexity(mo_1)
-r_1 <- rmse(SalePrice, predict(mo_1))
-c_1
-r_1
+r_1 <- rmse(Ames_clean$SalePrice, predict(mo_1))
+print(c_1)
+print(r_1)
 a <- ols_step_forward_p(mo_1)
 a
 summary(mo_1)
@@ -36,7 +36,7 @@ summary(mo_1)
 mo_2 <- lm(SalePrice ~  GarageCond + TotalBsmtSF +BsmtExposure + Fireplaces, data=Ames)
 c_2 <- get_complexity(mo_2)
 c_2
-r_2 <- rmse(SalePrice, predict(mo_2))
+r_2 <- rmse(Ames$SalePrice, predict(mo_2))
 r_2
 b <- ols_step_forward_p(mo_2)
 b
@@ -45,7 +45,7 @@ attach(Ames)
 mo_3 <- lm(SalePrice ~ Heating+FireplaceQu+ BsmtExposure)
 c_3 <- get_complexity(mo_3)
 c_3
-r_3 <- rmse(SalePrice, predict(mo_3))
+r_3 <- rmse(Ames$SalePrice, predict(mo_3))
 r_3
 c <- ols_step_forward_p(mo_3)
 c
@@ -53,7 +53,7 @@ c
 mo_4 <- lm(SalePrice ~ HouseStyle + HeatingQC + KitchenQual + GarageArea, data=Ames)
 c_4 <- get_complexity(mo_4)
 c_4
-r_4 <- rmse(SalePrice, predict(mo_4))
+r_4 <- rmse(Ames$SalePrice, predict(mo_4))
 r_4
 d <- ols_step_forward_p(mo_4)
 d
@@ -61,7 +61,7 @@ d
 mo_5 <- lm(SalePrice ~ Street + CentralAir + YearBuilt + GarageQual + GrLivArea + Utilities, data=Ames)
 c_5 <- get_complexity(mo_5)
 c_5
-r_5 <- rmse(SalePrice, predict(mo_5))
+r_5 <- rmse(Ames$SalePrice, predict(mo_5))
 r_5
 e <- ols_step_forward_p(mo_5)
 e
@@ -69,7 +69,7 @@ e
 mo_6 <- lm(SalePrice ~ PoolArea+Foundation+ExterCond+Alley + LotFrontage + MasVnrType + FullBath + GarageFinish, data=Ames)
 c_6 <- get_complexity(mo_5)
 c_6
-r_6 <- rmse(SalePrice, predict(mo_6))
+r_6 <- rmse(Ames$SalePrice, predict(mo_6))
 r_6
 f <- ols_step_forward_p(mo_6)
 f
@@ -77,7 +77,7 @@ f
 mo_7 <- lm(SalePrice ~  OpenPorchSF+ BsmtExposure + WoodDeckSF+ LowQualFinSF, data=Ames)
 c_7 <- get_complexity(mo_7)
 c_7
-r_7 <- rmse(SalePrice, predict(mo_7))
+r_7 <- rmse(Ames$SalePrice, predict(mo_7))
 r_7
 g <- ols_step_forward_p(mo_7)
 g
@@ -85,7 +85,7 @@ g
 mo_8 <- lm(SalePrice ~ MoSold + YrSold+ GarageCars+ KitchenAbvGr+LotConfig+RoofStyle, data=Ames)
 c_8 <- get_complexity(mo_8)
 c_8
-r_8 <- rmse(SalePrice, predict(mo_8))
+r_8 <- rmse(Ames$SalePrice, predict(mo_8))
 r_8
 h <- ols_step_forward_p(mo_8)
 h
@@ -93,7 +93,7 @@ h
 mo_9 <- lm(SalePrice ~ Electrical + RoofMatl+ LandSlope, data=Ames)
 c_9 <- get_complexity(mo_9)
 c_9
-r_9 <- rmse(SalePrice, predict(mo_9))
+r_9 <- rmse(Ames$SalePrice, predict(mo_9))
 r_9
 i <- ols_step_forward_p(mo_9)
 i
@@ -101,7 +101,7 @@ i
 mo_10 <- lm(SalePrice ~  ExterQual+ BldgType+ GarageQual, data=Ames)
 c_10 <- get_complexity(mo_10)
 c_10
-r_10 <- rmse(SalePrice, predict(mo_10))
+r_10 <- rmse(Ames$SalePrice, predict(mo_10))
 r_10
 j <- ols_step_forward_p(mo_10)
 j
@@ -109,7 +109,7 @@ j
 mo_11 <- lm(SalePrice ~BsmtExposure+ HeatingQC+ FireplaceQu, data=Ames)
 c_11 <- get_complexity(mo_11)
 c_11
-r_11 <- rmse(SalePrice, predict(mo_11))
+r_11 <- rmse(Ames$SalePrice, predict(mo_11))
 r_11
 k <- ols_step_forward_p(mo_11)
 k
@@ -117,7 +117,7 @@ k
 mo_12 <- lm(SalePrice ~ BldgType+MasVnrType+ BsmtHalfBath+LowQualFinSF, data=Ames)
 c_12 <- get_complexity(mo_12)
 c_12
-r_12 <- rmse(SalePrice, predict(mo_12))
+r_12 <- rmse(Ames$SalePrice, predict(mo_12))
 r_12
 l <- ols_step_forward_p(mo_12)
 l
@@ -125,7 +125,7 @@ l
 mo_13 <- lm(SalePrice ~ BsmtCond+GarageCond+ExterCond, data=Ames)
 c_13 <- get_complexity(mo_13)
 c_13
-r_13 <- rmse(SalePrice, predict(mo_13))
+r_13 <- rmse(Ames$SalePrice, predict(mo_13))
 r_13
 m <- ols_step_forward_p(mo_13)
 m
@@ -133,7 +133,7 @@ m
 mo_14 <- lm(SalePrice ~ RoofMatl+ BsmtFullBath+ Electrical+HalfBath, data=Ames)
 c_14 <- get_complexity(mo_14)
 c_14
-r_14 <- rmse(SalePrice, predict(mo_14))
+r_14 <- rmse(Ames$SalePrice, predict(mo_14))
 r_14
 n <- ols_step_forward_p(mo_14)
 n
@@ -141,7 +141,7 @@ n
 mo_15 <- lm(SalePrice ~ EnclosedPorch+ RoofStyle+ ScreenPorch+FullBath, data=Ames)
 c_15 <- get_complexity(mo_15)
 c_15
-r_15 <- rmse(SalePrice, predict(mo_15))
+r_15 <- rmse(Ames$SalePrice, predict(mo_15))
 r_15
 o <- ols_step_forward_p(mo_15)
 o
@@ -150,11 +150,8 @@ x <- c(c_1, c_2, c_3, c_4, c_5,c_6,c_7,c_8,c_9,c_10,c_11,c_12,c_13,c_14,c_15)
 x
 y <- c(r_1, r_2, r_3, r_4, r_5,r_6,r_7,r_8,r_9,r_10,r_11,r_12,r_13,r_14,r_15)
 y
-t <- data.frame(x,y)
 
-t
-
-plot(data=t,x,y,main="complexity vs rmse", xlab="complexity", ylab="RMSE", col="dark blue")
+plot(x,y,main="complexity vs rmse", xlab="complexity", ylab="RMSE", col="dark blue",type="p")
 
 #exercise 2
 
