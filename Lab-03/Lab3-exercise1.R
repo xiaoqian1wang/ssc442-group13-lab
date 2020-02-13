@@ -36,7 +36,7 @@ b
 attach(Ames)
 mo_3 <- lm(SalePrice ~ LotFrontage+ FullBath + BedroomAbvGr
               + Fireplaces+ Heating +MasVnrArea)
-c_3 <- get_complexity(model_3)
+c_3 <- get_complexity(mo_3)
 c_3
 r_3 <- rmse(SalePrice, predict(mo_3))
 r_3
