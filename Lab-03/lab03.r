@@ -2,8 +2,11 @@
 #   lab 03 Group 13.
 #   Group members: Xinyu Li, Nick Carroll, Xiaoqian Wang, Dongdong Li, 
 ###############################################################
+# exercise 1
 library(tidyverse)
 library(dplyr)
+library(olsrr)
+library(GuessCompx)
 ameslist <- read.table("https://msudataanalytics.github.io/SSC442/Labs/data/ames.csv",
                        header = TRUE,
                        sep = ",", na.strings=TRUE,stringsAsFactors = TRUE)
@@ -38,9 +41,8 @@ b <- ols_step_forward_p(mo_2)
 b
 # model 3
 attach(Ames)
-mo_3 <- lm(SalePrice ~ LotFrontage+ FullBath + BedroomAbvGr
-           + Fireplaces+ Heating +MasVnrArea)
-c_3 <- get_complexity(model_3)
+mo_3 <- lm(SalePrice ~ Heating+FireplaceQu+ BsmtExposure)
+c_3 <- get_complexity(mo_3)
 c_3
 r_3 <- rmse(SalePrice, predict(mo_3))
 r_3
@@ -155,29 +157,10 @@ plot(data=t,x,y,main="complexity vs rmse", xlab="complexity", ylab="RMSE", col="
 
 #exercise 2
 
-library(tidyverse)
-library(dplyr)
-library(olsrr)
-library(GuessCompx)
-#lab 3 exercise 1
-ameslist <- read.table("https://msudataanalytics.github.io/SSC442/Labs/data/ames.csv",
-                       header = TRUE,
-                       sep = ",")
-
 Ames <- select(ameslist, -c(OverallQual,OverallCond))
 
 
 Ames = Ames[complete.cases(Ames[ , c(4,5,18,25,45,48,50,51,54,55,61,69,70,38)]),]
-attach(Ames)
-model_1 <- lm(SalePrice ~ LotFrontage+ LotArea + YearBuilt + GrLivArea + FullBath + BedroomAbvGr
-              + KitchenAbvGr + Fireplaces + GarageArea + ScreenPorch + PoolArea + Heating +
-                Functional + MasVnrArea)
-a <- ols_step_best_subset(model_1)
-plot(a)
-
-
-
-
 
 rmse = function(actual, predicted) {
   sqrt(mean((actual - predicted) ^ 2))
