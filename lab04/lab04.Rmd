@@ -1,0 +1,128 @@
+---
+title: "Lab04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+install.packages("kernlab")
+library(kernlab)
+data("spam")
+tibble::as.tibble(spam)
+```
+
+```{r}
+is.factor(spam$type)
+levels(spam$type)
+```
+
+```{r}
+set.seed(42)
+spam_idx = sample(nrow(spam), round(nrow(spam)/2))
+spam_trn = spam[spam_idx,]
+spam_tst = spam[-spam_idx,]
+```
+
+```{r}
+fit_caps = glm(type ~ capitalTotal,
+               data = spam_trn, family =  binomial)
+
+fit_selected = glm(type ~ edu + money + capitalTotal + charDollar, data = spam_trn, 
+                   family = binomial)
+
+fit_additive = glm(type ~ .,
+                   data = spam_trn,
+                   family = binomial)
+
+fit_over = glm(type~ capitalTotal * (.),
+               data = spam_trn,
+               family=binomial, maxit = 50)
+```
+# Evaluating Classifiers
+looking most for the misclassification rate. 
+
+```{r Training Misclassification Rate}
+mean(ifelse(predict(fit_caps) > 0, "spam", "nonspam") != spam_trn$type)
+
+mean(ifelse(predict(fit_selected) > 0, "spam", "nonspam") != spam_trn$type)
+
+mean(ifelse(predict(fit_additive)>0, "spam", "nonspam") != spam_trn$type)
+
+mean(ifelse(predict(fit_over)>0, "spam", "nonspam") != spam_trn$type)
+
+```
+```{r Cross Validation}
+library(boot)
+set.seed(1)
+cv.glm(spam_trn, fit_caps, K = 5)$delta[1]
+cv.glm(spam_trn, fit_selected, K = 5)$delta[1]
+cv.glm(spam_trn, fit_additive, K = 5)$delta[1]
+cv.glm(spam_trn, fit_over, K = 5)$delta[1]
+```
+
+# Exercise 1 (first part)
+1. The most underfit to least underfit are as follows:
+- 0.07
+- 0.11
+- 0.15
+- 0.22
+
+```{r}
+set.seed(5)
+cv.glm(spam_trn, fit_caps, K = 100)$delta[1]
+cv.glm(spam_trn, fit_selected, K = 100)$delta[1]
+cv.glm(spam_trn, fit_additive, K = 100)$delta[1]
+cv.glm(spam_trn, fit_over, K = 100)$delta[1]
+```
+
+## Results
+
+There really isn't a change in the data. If we look at the outputs after adjusting both the seed and the fold (K value), the only change is a one-thousandth of a decimal point. So yes, there is a change, but nothing significant. No change in conclusion. 
+
+
+```{r}
+make_conf_mat = function(predicted, actual){
+  table(predicted = predicted, actual = actual)
+}
+```
+
+```{r}
+spam_tst_pred = ifelse(predict(fit_additive, spam_tst) > 0, "spam", "nonspam")
+
+spam_tst_pred = ifelse(predict(fit_additive, spam_tst, type = "response") > 0.5, "spam", "nonspam")
+```
+
+Making a confusion matrix
+```{r}
+(conf_mat_50 = make_conf_mat(predicted = spam_tst_pred, actual = spam_tst$type))
+
+table(spam_tst$type) / nrow(spam_tst)
+```
+# Exercise 1 (second part)
+3. Make a confusion matrix for each of the four models in Part 1
+
+```{r}
+library(caret)
+
+
+spam_tst_pred = ifelse(predict(fit_additive, spam_tst) > 0, "spam", "nonspam")
+spam_tst_caps = ifelse(predict(fit_caps, spam_tst) >0 , "spam", "nonspam")
+spam_tst_over = ifelse(predict(fit_over, spam_tst) >0 , "spam", "nonspam")
+spam_tst_select = ifelse(predict(fit_selected, spam_tst) >0 , "spam", "nonspam")
+
+
+make_conf_mat(predicted = spam_tst_pred, actual = spam_tst$type)
+make_conf_mat(predicted = spam_tst_caps, actual = spam_tst$type)
+make_conf_mat(predicted = spam_tst_over, actual = spam_tst$type)
+make_conf_mat(predicted = spam_tst_select, actual = spam_tst$type)
+
+```
+
+
+
+
+
+
